@@ -1,3 +1,5 @@
+const {response} = require("express");
+
 const getUsuario = (req, res) => {
   res.json({
     msg: "Desde usuarios controller",
