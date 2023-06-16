@@ -29,6 +29,7 @@ const usuario = Schema(
     },
     google: {
       type: Boolean,
+      default: false,
     },
   },
   {
