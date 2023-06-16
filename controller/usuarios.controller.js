@@ -1,4 +1,6 @@
 const { response } = require("express");
+const Usuario = require("../models/usuario");
+const bcript = require("bcryptjs");
 
 const getUsuario = (req, res) => {
   const { q, nombre, apiKey } = req.query;
@@ -15,13 +17,37 @@ const deleteUsuario = (req, res) => {
   });
 };
 
-const postUsuario = (req, res) => {
-  const { nombre, edad } = req.body;
-  res.json({
-    msg: "Desde post usuarios controller",
-    nombre,
-    edad,
-  });
+const postUsuario = async (req, res) => {
+  const { nombre, email, password, rol, imagen } = req.body;
+  try {
+    //Verificar que el correo exista
+    const existeEmail = await Usuario.findOne({ email });
+    if (existeEmail) {
+      return res.status(400).json({
+        msg: "Este correo ya existe",
+      });
+    }
+
+    //creando el modelo del usuario
+    const usuario = new Usuario({ nombre, email, password, rol, imagen });
+
+    //Encriptar contraseña
+    const salt = bcript.genSaltSync(12);
+    usuario.password = bcript.hashSync(password, salt);
+
+    await usuario.save();
+
+    res.json({
+      msg: "Desde post usuarios controller",
+      usuario,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      ok: false,
+      msg: " Contacte con el admin",
+    });
+  }
 };
 const putUsuario = (req, res) => {
   const id = req.params.id;
