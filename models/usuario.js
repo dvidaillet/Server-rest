@@ -33,7 +33,7 @@ const usuario = Schema(
   },
   {
     versionKey: false,
-    timestamps: true,
+    timestamps: true /* { createdAt: true, updatedAt: true } */,
   }
 );
 
