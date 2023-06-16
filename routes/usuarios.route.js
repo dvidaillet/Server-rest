@@ -9,7 +9,7 @@ const {
 
 userRouter.get("/", getUsuario);
 userRouter.post("/", postUsuario);
-userRouter.put("/", putUsuario);
+userRouter.put("/:id/:a", putUsuario);
 userRouter.delete("/", deleteUsuario);
 
 module.exports = userRouter;
