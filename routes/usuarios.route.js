@@ -8,6 +8,8 @@ const {
 } = require("../controller/usuarios.controller");
 const { check } = require("express-validator");
 const { validarCampos } = require("../middlewares/validar-campos");
+const { validarRole } = require("../helpers/db-validators");
+const Role = require("../models/role");
 
 userRouter.get("/", getUsuario);
 userRouter.post(
@@ -18,11 +20,12 @@ userRouter.post(
     check("password", "La password contiene menos de 6 caracteres").isLength({
       min: 6,
     }),
-    check("rol", "El rol no es valido").isIn([
-      "ADMIN_ROLE",
-      "USER_ROLE",
-      "VENTAS_ROLE",
-    ]),
+     check("rol").custom(async (rol = '') => {
+      const existe = await Role.findOne({ rol });
+      if (!existe) {
+        throw new Error(`El rol ${rol} no existe en la BD`);
+      }
+    }),
     validarCampos,
   ],
   postUsuario
