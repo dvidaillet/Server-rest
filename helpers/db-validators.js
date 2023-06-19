@@ -1,10 +1,10 @@
 const Role = require("../models/role");
 const Usuario = require("../models/usuario");
 
-const validarRole = async (rol) => {
-  const existeRol = await Role.findOne({ rol });
-  if (!existeRol) {
-    throw new Error(`El rol ${rol} no existe`);
+const validarRole = async (rol = '') => {
+  const existe = await Role.findOne({ rol });
+  if (!existe) {
+    throw new Error(`El rol ${rol} no existe en la BD`);
   }
 };
 
