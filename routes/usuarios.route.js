@@ -8,7 +8,7 @@ const {
 } = require("../controller/usuarios.controller");
 const { check } = require("express-validator");
 const { validarCampos } = require("../middlewares/validar-campos");
-const { validarRole } = require("../helpers/db-validators");
+const { validarRole, existeEmail } = require("../helpers/db-validators");
 
 userRouter.get("/", getUsuario);
 userRouter.post(
@@ -16,6 +16,7 @@ userRouter.post(
   [
     check("nombre", "El nombre es obligatorio").notEmpty(),
     check("email", "El Formato del email es incorrecto").isEmail(),
+    check("email").custom(existeEmail),
     check("password", "La password contiene menos de 6 caracteres").isLength({
       min: 6,
     }),

@@ -19,15 +19,7 @@ const deleteUsuario = (req, res) => {
 
 const postUsuario = async (req, res) => {
   const { nombre, email, password, rol, imagen } = req.body;
-  try {
-    //Verificar que el correo exista
-    const existeEmail = await Usuario.findOne({ email });
-    if (existeEmail) {
-      return res.status(400).json({
-        msg: "Este correo ya existe",
-      });
-    }
-
+  try {  
     //creando el modelo del usuario
     const usuario = new Usuario({ nombre, email, password, rol, imagen });
 

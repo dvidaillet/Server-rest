@@ -1,17 +1,18 @@
 const Role = require("../models/role");
 const Usuario = require("../models/usuario");
 
-const validarRole = async (rol = '') => {
+const validarRole = async (rol = "") => {
   const existe = await Role.findOne({ rol });
   if (!existe) {
     throw new Error(`El rol ${rol} no existe en la BD`);
   }
 };
 
-const existeEmail = async (correo) => {
-  const existeUsuario = await Usuario.findOne({ correo });
-  if (existeUsuario) {
-    throw new Error(` El correo ${correo} ya esta registrado`);
+//Verificar que el correo exista
+const existeEmail = async (email) => {
+  await Usuario.findOne({ email });
+  if (existeEmail) {
+    throw new Error(`El correo ${email} ya existe`);
   }
 };
 
