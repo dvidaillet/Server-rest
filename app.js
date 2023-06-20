@@ -23,7 +23,7 @@ app.use(cors());
  *  Rutas
  */
 app.use("/usuario", require("./routes/usuarios.route"));
-
+app.use("/auth", require("./routes/auth.routes"));
 /**
  *  Directorio Publico
  */

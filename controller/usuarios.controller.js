@@ -18,6 +18,7 @@ const getUsuario = async (req, res) => {
     usuarios,
   });
 };
+
 const deleteUsuario = async (req, res) => {
   const { id } = req.params;
   const borrado = await Usuario.findByIdAndUpdate(id, { estado: false });
