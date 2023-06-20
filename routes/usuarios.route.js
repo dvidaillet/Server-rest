@@ -34,13 +34,13 @@ userRouter.put(
   [
     check("id", "No es un id valido").isMongoId(),
     check("id").custom(existeUsusarioById),
-    check("rol").custom(validarRole),
+    // check("rol").custom(validarRole),
     validarCampos,
   ],
   putUsuario
 );
 userRouter.delete(
-  "/",
+  "/:id",
   [
     check("id", "No es un id valido").isMongoId(),
     check("id").custom(existeUsusarioById),
