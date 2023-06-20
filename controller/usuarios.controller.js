@@ -2,13 +2,12 @@ const { response } = require("express");
 const Usuario = require("../models/usuario");
 const bcript = require("bcryptjs");
 
-const getUsuario = (req, res) => {
-  const { q, nombre, apiKey } = req.query;
+const getUsuario = async (req, res) => {
+  const { limit = 4, desde = 0 } = req.query;
+  const usuarios = await Usuario.find().skip(desde).limit(limit);
   res.json({
     msg: "Desde usuarios controller",
-    q,
-    nombre,
-    apiKey,
+    usuarios,
   });
 };
 const deleteUsuario = (req, res) => {
@@ -19,7 +18,7 @@ const deleteUsuario = (req, res) => {
 
 const postUsuario = async (req, res) => {
   const { nombre, email, password, rol, imagen } = req.body;
-  try {  
+  try {
     //creando el modelo del usuario
     const usuario = new Usuario({ nombre, email, password, rol, imagen });
 
@@ -41,13 +40,22 @@ const postUsuario = async (req, res) => {
     });
   }
 };
-const putUsuario = (req, res) => {
-  const id = req.params.id;
-  const a = req.params.a;
+
+const putUsuario = async (req, res) => {
+  const { id } = req.params;
+  const { _id, password, google, email, ...resto } = req.body;
+
+  if (password) {
+    const salt = bcript.genSaltSync(12);
+    resto.password = bcript.hashSync(password, salt);
+  }
+
+  const eUsuario = await Usuario.findByIdAndUpdate(id, resto);
+
   res.json({
     msg: "Desde put usuarios controller",
     id,
-    a,
+    resto,
   });
 };
 

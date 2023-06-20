@@ -10,8 +10,8 @@ const validarRole = async (rol = "") => {
 
 //Verificar que el correo exista
 const existeEmail = async (email) => {
-  await Usuario.findOne({ email });
-  if (existeEmail) {
+ const existe = await Usuario.findOne({ email });
+  if (existe) {
     throw new Error(`El correo ${email} ya existe`);
   }
 };
