@@ -4,9 +4,13 @@ const bcript = require("bcryptjs");
 
 const getUsuario = async (req, res) => {
   const { limit = 4, desde = 0 } = req.query;
-  const usuarios = await Usuario.find().skip(desde).limit(limit);
+  const usuarios = await Usuario.find({ estado: true })
+    .skip(desde)
+    .limit(limit);
+
+  const total = await Usuario.countDocuments({ estado: true });
   res.json({
-    msg: "Desde usuarios controller",
+    total,
     usuarios,
   });
 };
