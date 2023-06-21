@@ -22,8 +22,9 @@ app.use(cors());
 /**
  *  Rutas
  */
-app.use("/usuario", require("./routes/usuarios.route"));
-app.use("/auth", require("./routes/auth.routes"));
+app.use("/api/usuario", require("./routes/usuarios.route"));
+app.use("/api/auth", require("./routes/auth.routes"));
+app.use("/api/auth", require("./routes/auth.routes"));
 /**
  *  Directorio Publico
  */
