@@ -1,12 +1,21 @@
-const listaCategorias = (req, res) => {
+const Categoria = require("../models/categoria");
+
+const listaCategorias = async (req, res) => {
+  const categorias = await Categoria.find({ estado: true });
+
   res.status(200).json({
-    msg: "lista desde la ruta de categorias",
+    msg: "lista de categorias",
+    categorias,
   });
 };
 
-const listaCategoriasById = (req, res) => {
+const listaCategoriasById = async (req, res) => {
+  const { id } = req.params;
+  const categorias = await Categoria.find({ usuario: id, estado: true });
   res.status(200).json({
     msg: "Lista por usuario desde la ruta de categorias",
+    id,
+    categorias,
   });
 };
 

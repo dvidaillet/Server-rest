@@ -12,7 +12,7 @@ const {
 categoriasRouter.get("/", listaCategorias);
 
 //Listar categorias de un ususario
-categoriasRouter.get("/:id", listaCategoriasById);
+categoriasRouter.get("/:id",[], listaCategoriasById);
 
 //crear categoria
 categoriasRouter.post("/", crearCategoria);
