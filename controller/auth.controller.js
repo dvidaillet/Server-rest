@@ -48,6 +48,12 @@ const login = async (req, res = response) => {
   }
 };
 
+const registerUsuario = async (req, res) => {
+  res.status(200).json({
+    msg: "Desde register",
+  });
+};
+
 const googleSignin = async (req, res = response) => {
   const { id_token } = req.body;
 
@@ -93,5 +99,6 @@ const googleSignin = async (req, res = response) => {
 
 module.exports = {
   login,
+  registerUsuario,
   googleSignin,
 };
