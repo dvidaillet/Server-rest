@@ -1,10 +1,16 @@
 const Categoria = require("../models/categoria");
 
 const listaCategorias = async (req, res) => {
-  const categorias = await Categoria.find({ estado: true });
+  const { desde = 0, limit = 5 } = req.query;
+
+  const total = await Categoria.countDocuments({ estado: true });
+  const categorias = await Categoria.find({ estado: true })
+    .skip(desde)
+    .limit(limit);
 
   res.status(200).json({
     msg: "lista de categorias",
+    total,
     categorias,
   });
 };
@@ -19,9 +25,26 @@ const listaCategoriasById = async (req, res) => {
   });
 };
 
-const crearCategoria = (req, res) => {
-  res.status(200).json({
-    msg: "Crear desde la ruta de categorias",
+const crearCategoria = async (req, res) => {
+  const nombre = req.body.nombre.toUpperCase();
+
+  const categoriaBD = await Categoria.findOne({ nombre });
+  if (categoriaBD) {
+    return res.status(400).json({
+      msg: `La categoria ${categoriaBD.nombre} ya existe`,
+    });
+  }
+
+  const data = {
+    nombre,
+    usuario: req.usuario._id,
+  };
+
+  const categoria = new Categoria(data);
+  await categoria.save();
+  res.status(201).json({
+    msg: "Categoria creada con exito",
+    categoria,
   });
 };
 
