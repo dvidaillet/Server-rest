@@ -6,6 +6,11 @@ const conexionDB = require("./db/config");
 require("dotenv").config();
 const port = process.env.PORT;
 
+const paths = {
+  auth: "/api/auth",
+  categorias: "/api/categorias",
+  usuarios: "/api/usuario",
+};
 /**
  * conexion a DB
  */
@@ -22,9 +27,9 @@ app.use(cors());
 /**
  *  Rutas
  */
-app.use("/api/usuario", require("./routes/usuarios.route"));
-app.use("/api/auth", require("./routes/auth.routes"));
-app.use("/api/categorias", require("./routes/categorias.routes"));
+app.use(paths.auth, require("./routes/auth.routes"));
+app.use(paths.categorias, require("./routes/categorias.routes"));
+app.use(paths.usuarios, require("./routes/usuarios.route"));
 /**
  *  Directorio Publico
  */
