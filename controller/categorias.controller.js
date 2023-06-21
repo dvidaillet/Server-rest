@@ -3,10 +3,10 @@ const Categoria = require("../models/categoria");
 const listaCategorias = async (req, res) => {
   const { desde = 0, limit = 5 } = req.query;
 
-  const total = await Categoria.countDocuments({ estado: true });
-  const categorias = await Categoria.find({ estado: true })
-    .skip(desde)
-    .limit(limit);
+  const [total, categorias] = await Promise.all([
+    Categoria.countDocuments({ estado: true }),
+    Categoria.find({ estado: true }).skip(desde).limit(limit),
+  ]);
 
   res.status(200).json({
     msg: "lista de categorias",
