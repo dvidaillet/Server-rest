@@ -7,15 +7,16 @@ const {
   listaCategoriasById,
   borrarCategoria,
 } = require("../controller/categorias.controller");
+const { validarJWT } = require("../helpers/validar-jwt");
 
 //Listar todas las categorias
 categoriasRouter.get("/", listaCategorias);
 
 //Listar categorias de un ususario
-categoriasRouter.get("/:id",[], listaCategoriasById);
+categoriasRouter.get("/:id", listaCategoriasById);
 
 //crear categoria
-categoriasRouter.post("/", crearCategoria);
+categoriasRouter.post("/", [validarJWT], crearCategoria);
 
 //actualizar una categoria de un usuario
 categoriasRouter.put("/:id", actualizarCategoria);
