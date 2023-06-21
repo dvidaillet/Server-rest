@@ -24,7 +24,7 @@ app.use(cors());
  */
 app.use("/api/usuario", require("./routes/usuarios.route"));
 app.use("/api/auth", require("./routes/auth.routes"));
-app.use("/api/auth", require("./routes/auth.routes"));
+app.use("/api/categorias", require("./routes/categorias.routes"));
 /**
  *  Directorio Publico
  */
