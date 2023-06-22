@@ -1,3 +1,4 @@
+const Categoria = require("../models/categoria");
 const Role = require("../models/role");
 const Usuario = require("../models/usuario");
 
@@ -18,6 +19,13 @@ const existeEmail = async (email) => {
 
 const existeUsusarioById = async (id) => {
   const existeId = await Usuario.findById(id);
+  if (!existeId) {
+    throw new Error(` El id: ${id} no existe`);
+  }
+};
+
+const existeCategoria = async (id) => {
+  const existeId = await Categoria.findById(id);
   if (!existeId) {
     throw new Error(` El id: ${id} no existe`);
   }

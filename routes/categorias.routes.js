@@ -16,7 +16,7 @@ const { validarCampos } = require("../middlewares/validar-campos");
 categoriasRouter.get("/", listaCategorias);
 
 //Listar categorias de un ususario
-categoriasRouter.get("/:id", listaCategoriasById);
+categoriasRouter.get("/:id", [validarJWT], listaCategoriasById);
 
 //crear categoria
 categoriasRouter.post(
@@ -30,9 +30,17 @@ categoriasRouter.post(
 );
 
 //actualizar una categoria de un usuario
-categoriasRouter.put("/:id", actualizarCategoria);
+categoriasRouter.put(
+  "/:id",
+  [
+    validarJWT,
+    check("nombre", "El nombre es obligatorio").notEmpty(),
+    validarCampos,
+  ],
+  actualizarCategoria
+);
 
 //barrar una categoria solo si es ADMIN
-categoriasRouter.delete("/:id", borrarCategoria);
+categoriasRouter.delete("/:id",[validarJWT, vali], borrarCategoria);
 
 module.exports = categoriasRouter;
